@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -15,13 +16,22 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(bodyParser.json());
+
+app.post('/api/stuff', (req, res, next) => {
+  console.log(req.body);
+  res.status(201).json({
+    message: 'Thing created successfuly!',
+  });
+});
+
 app.use('/api/stuff', (req, res, next) => {
   const stuff = [
     {
       _id: 'aflkzhfa',
       title: 'My first thing',
       description: 'All of the info of my first thing',
-      imageUrl: '',
+      imageUrl: 'https://picsum.photos/600',
       price: 4900,
       userId: 'kjahzfakl',
     },
@@ -29,7 +39,7 @@ app.use('/api/stuff', (req, res, next) => {
       _id: 'aflhfa',
       title: 'My second thing',
       description: 'All of the info of my Second thing',
-      imageUrl: '',
+      imageUrl: 'https://picsum.photos/600',
       price: 1200,
       userId: 'kjahakl',
     },
